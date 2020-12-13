@@ -3,10 +3,8 @@
 def csv_reader(file_obj):
     from oscar.apps.catalogue.models import Product, ProductImage, ProductClass
     from oscar.apps.partner.models import StockRecord
-    from oscar.apps.partner.strategy import Selector
     from django.shortcuts import get_object_or_404
     import csv
-    import requests
     Product.objects.all().delete()
     StockRecord.objects.all().delete()
     ProductClass.objects.all().delete()

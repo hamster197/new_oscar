@@ -1,13 +1,17 @@
-from decimal import Decimal as D
-
-from oscar.apps.shipping.methods import Free, FixedPrice
-from oscar.apps.shipping.repository import Repository as CoreRepository
+from oscar.apps.shipping import repository
+from . import methods as shipping_methods
 
 
-class Repository(CoreRepository):
-    """
-    This class is included so that there is a choice of shipping methods.
-    Oscar's default behaviour is to only have one which means you can't test
-    the shipping features of PayPal.
-    """
-    methods = [Free(), FixedPrice(D('10.00'), D('10.00'))]
+class Repository(repository.Repository):
+
+    methods = [
+        shipping_methods.Standard(),
+        shipping_methods.International()
+    ]
+
+    def get_available_shipping_methods(self, basket, user=None, shipping_addr=None, request=None, **kwargs):
+        methods = (shipping_methods.Standard(),)
+        if shipping_addr and shipping_addr.country.code == 'US':
+            # Only available in the US
+            methods = (shipping_methods.Standard())
+        return methods

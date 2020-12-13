@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 urlpatterns += i18n_patterns(
+    # url(r'^checkout/shipping-address', include('apps.checkout.urls')),
     # PayPal Express integration...
     url(r'^checkout/paypal/', include('paypal.express.urls')),
     # Dashboard views for Payflow Pro

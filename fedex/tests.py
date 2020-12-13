@@ -41,19 +41,7 @@ def set_package(package):
     package.Weight.Value = 1.0
     package.Weight.Units = "LB"
 
-
-def set_selection_details(selection_details):
-    """
-    Set test selection details.
-    :param selection_details: The tracking selection details to populate.
-    """
-    selection_details.CarrierCode = "FDXG"
-    selection_details.OperatingCompany = "FEDEX_GROUND"
-    selection_details.PackageIdentifier.Type = "TRACKING_NUMBER_OR_DOORTAG"
-    selection_details.PackageIdentifier.Value = "800026015050023"
-
-
-def set_shipment(shipment, package):
+def set_shipment(shipment, package, country):
     """
     Set a test shipment.
     :param shipment: The shipment to populate.
@@ -62,14 +50,24 @@ def set_shipment(shipment, package):
     shipment.DropoffType = "REGULAR_PICKUP"
     # FEDEX_GROUND if in the US
     # INTERNATIONAL_ECONOMY if outside the US
-    shipment.ServiceType = "FEDEX_GROUND"
     shipment.PackagingType = "YOUR_PACKAGING"
     shipment.Shipper.Contact.CompanyName = "Pickwick & Weller"
     shipment.Shipper.Contact.PhoneNumber = "8777386171"
+    if (country == "russia"):
+        shipment.ServiceType = "INTERNATIONAL_ECONOMY"
+        set_to_address_russia(shipment.Recipient.Address)
+    elif (country == "america"):
+        shipment.ServiceType = "FEDEX_GROUND"
+        set_to_address_US(shipment.Recipient.Address)
+    elif (country == "europe"):
+        shipment.ServiceType = "INTERNATIONAL_ECONOMY"
+        set_to_address_europe(shipment.Recipient.Address)
+    elif (country == "brazil"):
+        shipment.ServiceType = "INTERNATIONAL_ECONOMY"
+        set_to_address_europe(shipment.Recipient.Address)
     set_from_address(shipment.Shipper.Address)
     shipment.Recipient.Contact.PersonName = "POTUS"
     shipment.Recipient.Contact.PhoneNumber = "1234567890"
-    set_to_address_US(shipment.Recipient.Address)
     shipment.RateRequestTypes = ["NONE"]
     shipment.RequestedPackageLineItems.append(package)
     shipment.PackageCount = len(shipment.RequestedPackageLineItems)
@@ -154,9 +152,9 @@ class FedexTestCase(TestCase):
         result = service.validate([address])
         print(result)
 
-    def test_rate_service(self):
+    def test_rate_service_US(self):
         """
-        Test the rate service.
+        Test the rate service for US.
         """
         service = RateService(CONFIGURATION)
         shipment = service.create_shipment()
