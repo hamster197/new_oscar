@@ -8,6 +8,7 @@ from .sevices import (AddressService, RateService)
 from unittest import TestCase
 import logging
 import os
+import pycountry
 
 try:
     from PIL import Image
@@ -66,8 +67,8 @@ def set_shipment(shipment, package, country):
         shipment.ServiceType = "INTERNATIONAL_ECONOMY"
         set_to_address_europe(shipment.Recipient.Address)
     set_from_address(shipment.Shipper.Address)
-    shipment.Recipient.Contact.PersonName = "POTUS"
-    shipment.Recipient.Contact.PhoneNumber = "1234567890"
+    # shipment.Recipient.Contact.PersonName = "POTUS"
+    # shipment.Recipient.Contact.PhoneNumber = "1234567890"
     shipment.RateRequestTypes = ["NONE"]
     shipment.RequestedPackageLineItems.append(package)
     shipment.PackageCount = len(shipment.RequestedPackageLineItems)
@@ -171,3 +172,7 @@ class FedexTestCase(TestCase):
         print(str(amount) + " " + currency)
         print("_________________________________________________________________________________________________")
         print(shipment)
+
+    def test(self):
+        print(pycountry.countries.get(name='United Kingdom of Great Britain and Northern Ireland').alpha_2)
+

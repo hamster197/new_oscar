@@ -8,6 +8,6 @@
             <a href="{% url 'paypal-redirect' %}"><img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;"></a>
         {% endif %}
 	{% endif %}
-	<a href="{% url 'checkout:index' %}" class="pull-right btn btn-large btn-primary">{% trans "Proceed to checkout" %}</a>
+	<a href="{% url 'checkout:shipping-method' %}" class="pull-right btn btn-large btn-primary">{% trans "Proceed to checkout" %}</a>
 </div>
 {% endblock formactions %}
