@@ -18,7 +18,7 @@ urlpatterns += i18n_patterns(
     # PayPal Express integration...
     url(r'^checkout/paypal/', include('paypal.express.urls')),
     # Dashboard views for Payflow Pro
-    url(r'^dashboard/paypal/payflow/', apps.get_app_config("payflow_dashboard").urls),
+    # url(r'^dashboard/paypal/payflow/', apps.get_app_config("payflow_dashboard").urls),
     # Dashboard views for Express
     url(r'^dashboard/paypal/express/', apps.get_app_config("express_dashboard").urls),
     url(r'^', include(apps.get_app_config('oscar').urls[0])),

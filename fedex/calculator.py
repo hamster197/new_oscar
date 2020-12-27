@@ -98,16 +98,65 @@ def set_to_address(address, shippingAddress: ShippingAddress):
 
     lineOfAddress = str(shippingAddress)
     listOfWords = lineOfAddress.split(",")
-    address.StreetLines = [listOfWords.__getitem__(1).strip()]
-    address.City = listOfWords.__getitem__(2).strip()
-    address.PostalCode = listOfWords.__getitem__(4).strip()
-    if listOfWords.__getitem__(5) is not None:
-        countryName = listOfWords.__getitem__(5).strip()
-        if countryName == "The United States of America":
-            countryName = "United States of America"
-        resultOfConversion = country_code_converter([countryName])
-        print("RESULT:" + str(resultOfConversion.__getitem__(0)))
-        address.CountryCode = resultOfConversion.__getitem__(0)
+    print("LINE:" + lineOfAddress + " \nARRAY: " + str(listOfWords) + " \nSIZE:" + str(len(listOfWords)))
+    if (len(listOfWords) == 5):
+        print("Size -> 5")
+        address.StreetLines = [listOfWords.__getitem__(1).strip()]
+        print(str(address.StreetLines))
+        address.City = listOfWords.__getitem__(2).strip()
+        address.PostalCode = listOfWords.__getitem__(3).strip()
+        if listOfWords.__getitem__(4) is not None:
+            countryName = listOfWords.__getitem__(4).strip()
+            if countryName == "The United States of America":
+                countryName = "United States of America"
+            resultOfConversion = country_code_converter([countryName])
+            print("RESULT:" + str(resultOfConversion.__getitem__(0)))
+            address.CountryCode = resultOfConversion.__getitem__(0)
+
+    if (len(listOfWords) == 6):
+        print("Size -> 6")
+        address.StreetLines = [listOfWords.__getitem__(1).strip()]
+        address.City = listOfWords.__getitem__(2).strip()
+        address.PostalCode = listOfWords.__getitem__(4).strip()
+        if listOfWords.__getitem__(5) is not None:
+            countryName = listOfWords.__getitem__(5).strip()
+            if countryName == "The United States of America":
+                countryName = "United States of America"
+            resultOfConversion = country_code_converter([countryName])
+            print("RESULT:" + str(resultOfConversion.__getitem__(0)))
+            address.CountryCode = resultOfConversion.__getitem__(0)
+
+    if (len(listOfWords) == 7):
+        print("Size -> 7")
+        address.StreetLines = [listOfWords.__getitem__(1).strip()]
+        address.City = listOfWords.__getitem__(2).strip()
+        address.PostalCode = listOfWords.__getitem__(4).strip()
+        if listOfWords.__getitem__(5) is not None:
+            countryName = listOfWords.__getitem__(5).strip()
+            if countryName == "The United States of America":
+                countryName = "United States of America"
+            resultOfConversion = country_code_converter([countryName])
+            print("RESULT:" + str(resultOfConversion.__getitem__(0)))
+            address.CountryCode = resultOfConversion.__getitem__(0)
+        if listOfWords.__getitem__(6) is not None:
+            print("Phone number:" + listOfWords.__getitem__(6).strip())
+            print("Instructions:" + listOfWords.__getitem__(6).strip())
+
+    if (len(listOfWords) == 8):
+        print("Size -> 8")
+        address.StreetLines = [listOfWords.__getitem__(1).strip()]
+        address.City = listOfWords.__getitem__(2).strip()
+        address.PostalCode = listOfWords.__getitem__(4).strip()
+        if listOfWords.__getitem__(5) is not None:
+            countryName = listOfWords.__getitem__(5).strip()
+            if countryName == "The United States of America":
+                countryName = "United States of America"
+            resultOfConversion = country_code_converter([countryName])
+            print("RESULT:" + str(resultOfConversion.__getitem__(0)))
+            address.CountryCode = resultOfConversion.__getitem__(0)
+        if listOfWords.__getitem__(6) is not None:
+            print("Phone number:" + listOfWords.__getitem__(6).strip())
+        print("Instructions:" + listOfWords.__getitem__(7).strip())
 
 
 def set_shipment(shipment, package, shippingAddress: ShippingAddress):
@@ -153,6 +202,7 @@ class FedexCalculator:
         set_package(package)
         set_shipment(shipment, package, to_shipping_address)
         result = FedexCalculator.service.get_rates(shipment)
+        print(result)
         for i in getattr(result, "RateReplyDetails"):
             for j in getattr(i, "RatedShipmentDetails"):
                 totalCharge = getattr(getattr(j, "ShipmentRateDetail"), "TotalNetChargeWithDutiesAndTaxes")
