@@ -69,6 +69,7 @@ def country_code_converter(input_countries):
     codes = []
     # appends ISO codes for all matches by trying different country name types
     # appends Unknown Country if no match found
+    print(countries_official)
     for i in input_countries:
         if i in countries.keys():
             codes.append(countries.get(i))
@@ -109,6 +110,7 @@ def set_to_address(address, shippingAddress: ShippingAddress):
             countryName = listOfWords.__getitem__(4).strip()
             if countryName == "The United States of America":
                 countryName = "United States of America"
+            # countryName = "United States of America"
             resultOfConversion = country_code_converter([countryName])
             print("RESULT:" + str(resultOfConversion.__getitem__(0)))
             address.CountryCode = resultOfConversion.__getitem__(0)
@@ -151,6 +153,8 @@ def set_to_address(address, shippingAddress: ShippingAddress):
             countryName = listOfWords.__getitem__(5).strip()
             if countryName == "The United States of America":
                 countryName = "United States of America"
+            # if countryName == "The United Arab Emirates":
+            #     countryName = ""
             resultOfConversion = country_code_converter([countryName])
             print("RESULT:" + str(resultOfConversion.__getitem__(0)))
             address.CountryCode = resultOfConversion.__getitem__(0)

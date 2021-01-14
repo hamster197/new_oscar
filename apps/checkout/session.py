@@ -89,7 +89,9 @@ class CheckoutSessionMixin(CoreCheckoutSessionMixin):
             print(shipping_kwargs)
             # shipping_charge = prices.Price(currency=basket.currency, excl_tax=D('0.00'), incl_tax=D('17.00'))
             shipping_charge = self.get_shipping_charge(basket)
+            print("SHIPPING CHARGE" + str(shipping_charge))
             total = self.get_order_totals(basket, shipping_charge=shipping_charge)
+            print("TOTAL" + str(total))
 
         submission = {
             'user': self.request.user,
